@@ -17,7 +17,7 @@ func checkError(err error) {
 var (
 	delimeter string
 	separator string
-	field     int
+	fields    []int
 	rootCmd   = &cobra.Command{
 		Use:   "cut [flags]",
 		Short: "Cut out fields from stdin or file",
@@ -26,8 +26,9 @@ var (
 			config := &filter.Config{
 				Separator: separator,
 				Delimeter: delimeter,
-				Field:     field,
+				Fields:    fields,
 			}
+			// fmt.Println(fields)
 			err := filter.Run(config)
 			checkError(err)
 		},
@@ -39,9 +40,10 @@ func Execute() error {
 }
 
 func init() {
-	rootCmd.PersistentFlags().IntVarP(&field, "fields", "f", 0, "select cut field to cut")
+	//rootCmd.PersistentFlags().IntVarP(&field, "field", "f", 0, "select cut field to cut")
+	rootCmd.PersistentFlags().IntSliceVarP(&fields, "fields", "f", []int{1}, "select cut fields")
 	rootCmd.PersistentFlags().StringVarP(&delimeter, "delimeter", "d", "\t", "specify delimeter between columns")
-	rootCmd.PersistentFlags().StringVarP(&separator, "separator", "s", NewLineString, "specify separator between lines")
+	rootCmd.PersistentFlags().StringVarP(&separator, "separator", "s", ",", "specify separator between lines")
 
 	err := rootCmd.MarkPersistentFlagRequired("fields")
 	checkError(err)

@@ -12,9 +12,13 @@ func Run(config *Config) error {
 
 	for scanner.Scan() {
 		line := strings.Split(scanner.Text(), config.Delimeter)
-		if len(line) > config.Field {
-			fmt.Println(line[config.Field-1])
+
+		for _, field := range config.Fields {
+			if field < len(line) {
+				fmt.Printf("%v%v", line[field], config.Separator)
+			}
 		}
+		fmt.Println()
 	}
 
 	return nil
