@@ -28,7 +28,6 @@ var (
 				Delimeter: delimeter,
 				Fields:    fields,
 			}
-			// fmt.Println(fields)
 			err := filter.Run(config)
 			checkError(err)
 		},
@@ -40,7 +39,6 @@ func Execute() error {
 }
 
 func init() {
-	//rootCmd.PersistentFlags().IntVarP(&field, "field", "f", 0, "select cut field to cut")
 	rootCmd.PersistentFlags().IntSliceVarP(&fields, "fields", "f", []int{1}, "select cut fields")
 	rootCmd.PersistentFlags().StringVarP(&delimeter, "delimeter", "d", "\t", "specify delimeter between columns")
 	rootCmd.PersistentFlags().StringVarP(&separator, "separator", "s", ",", "specify separator between lines")
